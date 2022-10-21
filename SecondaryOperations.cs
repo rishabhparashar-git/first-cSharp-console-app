@@ -1,24 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Calculator
 {
     internal class SecondaryOperations
     {
-        public int[] SortResults(string[] arr)
+        public virtual int[] SortResults(string[] arr)
         {
             int n = arr.Length;
             int[] indexArr = new int[n];
-            int[] elementArr= new int[n];
+            int[] elementArr = new int[n];
             for (int i = 0; i < n; i++)
             {
-                int siz = arr[i].Length;
-                string ele = arr[i]; 
+                string currentEle = arr[i];
+                int siz = currentEle.Length;
                 indexArr[i] = i;
-                elementArr[i] = Convert.ToInt32(ele[siz - 1]); ;
+                string numFound = "";
+                for (int j = currentEle.Length - 1; j >= 0; j--)
+                {
+                    char currentChar = currentEle[j];
+                    if (Char.IsDigit(currentChar))
+                    {
+                        numFound = currentChar + numFound;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                int num = Convert.ToInt32(numFound);
+                indexArr[i] = i;
+                elementArr[i] = num;
             }
             for (int i = 0; i < n; i++)
             {
@@ -38,7 +55,6 @@ namespace Calculator
                 }
             }
             return indexArr;
-
         }
     }
 }
